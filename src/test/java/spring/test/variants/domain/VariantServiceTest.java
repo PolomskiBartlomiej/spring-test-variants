@@ -31,7 +31,11 @@ public class VariantServiceTest {
     @Test
     public void validation_aspect_thrown_exception_when_name_is_empty() {
         //when:
-        var notValidVariant = new Variant(1, "");
+        final var notValidVariant = Variant.builder()
+                .id(1)
+                .name("")
+                .build();
+
         // then :.
         assertThatExceptionOfType(IllegalVariantException.class)
                 .isThrownBy(() -> classUnderTest.createVariant(notValidVariant));

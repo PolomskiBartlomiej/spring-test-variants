@@ -1,2 +1,2 @@
-INSERT INTO Variant
+INSERT INTO Variants
 VALUES (1, 'firstVariant');

@@ -30,7 +30,11 @@ public class VariantControllerTest {
     @Test
     public void check_is_user_interceptor_add_user_to_request() throws Exception {
         //given:
-        final var variant = new Variant(1, "firstVariant");
+        final var variant = Variant.builder()
+                .id(1)
+                .name("firstVariant")
+                .build();
+
         final var interceptorUser = new User("user");
 
         //when:
