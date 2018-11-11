@@ -14,12 +14,12 @@ public class VariantService {
 
     private final VariantRepository repository;
 
-    public Variant getVariant(int id) {
-        return repository.findById(id).orElseThrow(NoResultException::new);
+    public Variant getVariant(String name) {
+        return repository.findByName(name).orElseThrow(NoResultException::new);
     }
 
     @ValidVariant
     public Variant createVariant(Variant variant) {
-        return repository.save(variant);
+        return repository.saveAndFlush(variant);
     }
 }

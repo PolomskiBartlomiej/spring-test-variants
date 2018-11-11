@@ -25,10 +25,30 @@ repositories {
 
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile group: 'com.h2database', name: 'h2', version: '1.4.197'
-    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+	def excludeJunit4 = { exclude group: 'junit', module: 'junit' }
+
+    compile(
+			'org.springframework.boot:spring-boot-starter-data-jpa',
+    		'com.h2database:h2:1.4.197',
+    		'org.projectlombok:lombok:1.16.20')
+
+	annotationProcessor('org.projectlombok:lombok:1.16.20')
+
 	implementation('org.springframework.boot:spring-boot-starter-web')
-	testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+	testCompileOnly('org.projectlombok:lombok:1.16.20')
+
+	testCompile('com.jayway.restassured:rest-assured:2.9.0')
+
+	testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.1.0')
+
+	testImplementation(
+			'org.junit.jupiter:junit-jupiter-params:5.1.0',
+			'org.junit.jupiter:junit-jupiter-api:5.1.0')
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test', excludeJunit4)
+}
+
+test {
+	useJUnitPlatform()
 }

@@ -1,17 +1,13 @@
 package spring.test.variants.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
-@Getter
-@Builder
+@Builder(buildMethodName = "create")
 @EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
@@ -19,14 +15,9 @@ import javax.validation.constraints.Size;
 public class Variant {
     @Id
     @GeneratedValue
-    int id;
+    Integer id;
 
-    @NotBlank
-    @Size(min = 1, max = 50)
     @Column(name = "name")
-    String name;
-
-    private Variant() {
-        //hibernate
-    }
+    @Getter
+    @NotBlank String name;
 }

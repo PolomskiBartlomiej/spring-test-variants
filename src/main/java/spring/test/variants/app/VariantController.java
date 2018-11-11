@@ -12,9 +12,9 @@ class VariantController {
 
     private final VariantService service;
 
-    @GetMapping("/{id}")
-    Variant getVariant(@PathVariable int id) {
-        return service.getVariant(id);
+    @GetMapping("/{name}")
+    Variant getVariant(@PathVariable String name) {
+        return service.getVariant(name);
     }
 
     @PostMapping("/")
