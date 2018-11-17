@@ -180,14 +180,47 @@ class VariantRepositoryTest {
         );
     }
    ``` 
+  # testing entity validation 
   
+  Additionally `@DataJpaTest` fetch and configure javax validation, so we can test entity validation
  
+  **Example**
+  
+  Entity :
+  ```
+  @Entity
+  public class Variant {
+  ...
+  
+    @Column(name = "name")
+    @Getter
+    @NotBlank String name;
+  ...  
  
- 
+  ```
+  
+  Validation Test :
+  
+  ```
+    @ParameterizedTest
+    @MethodSource("notValidVariants")
+    void save_to_database_variant_without_name_throw_error(Variant notValidVariant) {
+        //when:
+        ThrowingCallable codeUnderTest = () -> {
+            repository.save(notValidVariant);
+            entityManager.flush();
+        };
 
+        //then:
+        assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(codeUnderTest);
+    }
 
- 
- 
-   
-
-
+    private static Stream<Arguments> notValidVariants() {
+        return Stream.of(
+                Arguments.of(createVariant().name("").create()),
+                Arguments.of(createVariant().name(" ").create()),
+                Arguments.of(createVariant().name(null).create())
+        );
+    }
+   ``` 
